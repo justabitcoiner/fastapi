@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, create_engine
+from sqlmodel import SQLModel, create_engine, Session
 
 
 class Engine:
@@ -19,3 +19,7 @@ class Engine:
     def create_new_tables(cls):
         engine = cls.get_engine()
         SQLModel.metadata.create_all(engine)
+
+    @classmethod
+    def get_session(cls):
+        return Session(cls.get_engine())
