@@ -1,9 +1,11 @@
 from fastapi import FastAPI
+from src.config import Configuration
 from src import models
 from src.db import Engine
 
-
-Engine.load("psycopg2", "postgres", "postgres", "127.0.0.1", 5432, "fastapi")
+Configuration.load_config()
+config = Configuration.get_config()
+Engine.load(**config["db"])
 Engine.create_new_tables()
 
 
