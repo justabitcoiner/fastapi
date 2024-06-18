@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, create_engine, Session
+from src.logger import logger
 
 
 class Engine:
@@ -17,6 +18,7 @@ class Engine:
 
     @classmethod
     def create_new_tables(cls):
+        logger.info("Create new tables")
         engine = cls.get_engine()
         SQLModel.metadata.create_all(engine)
 

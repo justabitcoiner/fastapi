@@ -5,9 +5,7 @@ from src import models
 from src.db import Engine
 from src.routers import user, token
 
-Configuration.load_config()
 config = Configuration.get_config()
-
 Jwt.gen_secret_key()
 Engine.load(**config["db"])
 Engine.create_new_tables()

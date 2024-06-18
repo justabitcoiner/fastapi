@@ -23,3 +23,6 @@ class Configuration:
         if cls.__config is None:
             raise Exception("Configuration has not yet loaded")
         return cls.__config
+
+
+Configuration.load_config()
