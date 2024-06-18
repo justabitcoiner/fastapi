@@ -4,7 +4,7 @@ from src.config import Configuration
 from src.jwt import Jwt
 from src import models
 from src.db import Engine
-from src.routers import user, token
+from src.routers import user, token, product_category
 from src.schemas.response import JSONResponseContent
 
 config = Configuration.get_config()
@@ -16,6 +16,7 @@ Engine.create_new_tables()
 app = FastAPI()
 app.include_router(user.router)
 app.include_router(token.router)
+app.include_router(product_category.router)
 
 
 @app.middleware("http")
