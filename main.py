@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from src.config import Configuration
 from src.jwt import Jwt
 from src import models
@@ -16,6 +16,8 @@ app.include_router(user.router)
 app.include_router(token.router)
 
 
-@app.get("/")
-def hello_world():
-    return {"message": "hello, world"}
+@app.middleware("http")
+async def use_session(req: Request, call_next):
+    with Engine.get_session() as session:
+        req.state.session = session
+        return await call_next(req)
