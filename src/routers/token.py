@@ -4,7 +4,7 @@ from sqlmodel import select
 from bcrypt import hashpw
 from src.models.user import User
 from src.schemas.user import CreateUser
-from src.schemas.response import JsonResponse
+from src.schemas.response import JSONResponseContent
 from src.jwt import Jwt
 
 
@@ -13,7 +13,7 @@ router.prefix = "/tokens"
 router.tags = ["Tokens"]
 
 
-@router.post("/new", response_model=JsonResponse)
+@router.post("/new", response_model=JSONResponseContent)
 def get_new_token(info: CreateUser, req: Request):
     statement = select(User).where(User.username == info.username)
     user = req.state.session.exec(statement).one_or_none()
