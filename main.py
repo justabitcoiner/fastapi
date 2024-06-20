@@ -4,7 +4,7 @@ from src.config import Configuration
 from src.jwt import Jwt
 from src import models
 from src.db import Engine
-from src.routers import user, token, product_category, product, order
+from src.routers import user, token, product_category, product, order, graphql
 from src.schemas.response import JSONResponseContent
 
 config = Configuration.get_config()
@@ -12,13 +12,13 @@ Jwt.gen_secret_key()
 Engine.load(**config["db"])
 Engine.create_new_tables()
 
-
 app = FastAPI()
 app.include_router(user.router)
 app.include_router(token.router)
 app.include_router(product_category.router)
 app.include_router(product.router)
 app.include_router(order.router)
+app.include_router(graphql.router)
 
 
 @app.middleware("http")
