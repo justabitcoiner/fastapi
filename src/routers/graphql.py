@@ -1,3 +1,5 @@
+import asyncio
+from typing import AsyncGenerator
 import strawberry
 from strawberry.fastapi import GraphQLRouter
 from sqlmodel import select, insert
@@ -73,5 +75,14 @@ class Mutation:
         return create_product({"title": title})
 
 
-scheme = strawberry.Schema(query=Query, mutation=Mutation)
+@strawberry.type
+class Subscription:
+    @strawberry.subscription
+    async def count(self, target: int = 100) -> AsyncGenerator[int, None]:
+        for i in range(target):
+            yield i
+            await asyncio.sleep(0.5)
+
+
+scheme = strawberry.Schema(query=Query, mutation=Mutation, subscription=Subscription)
 router = GraphQLRouter(scheme, "/graphql")
